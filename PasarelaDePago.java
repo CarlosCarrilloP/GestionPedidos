@@ -47,17 +47,10 @@ public class PasarelaDePago {
 	public void efectivopago(Double efectivo1) {
 		this.importe = efectivo1;
 		this.codigoPago = this.generarCodigoPago();
-		
-	
-	
-	
-		
 
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Ha elegido efectivo");
-		//System.out.println("Introduzca la cantidad que va a introducir");
-
-		//float cantidad = sc.nextFloat();
+		
 		double cantidad = efectivo1;
 		System.out.println("El total es de " + cantidad + "€");
 		System.out.println("Necesitas:");

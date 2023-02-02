@@ -1,17 +1,17 @@
 package carlosPedido;
 
 import java.util.Scanner;
+
 /**
- * @author Carlos Carrillo V 0.0
- * Codigo estable de un programa de gestion de productos
- * con la creacion de 3 clientes y 5 productos.
+ * @author Carlos Carrillo V 0.1
+ * Añadida la funcionalidad de stockaje
  *
  */
 public class GestionPedidos {
 
 	@SuppressWarnings("unused")
 	public static void main(String[] args) {
-		double totalefectivo=0;
+		double totalefectivo = 0;
 		Scanner sc = new Scanner(System.in);
 
 		System.out.println("#####MENU INICIAL#####");
@@ -20,7 +20,7 @@ public class GestionPedidos {
 		System.out.println("Pulsa intro para continuar");
 		String a = sc.nextLine();
 
-		// Clientes
+		// Creacion de los clientes
 
 		System.out.print("Ingresa el nombre del Cliente 1: ");
 
@@ -56,40 +56,53 @@ public class GestionPedidos {
 
 		Cliente cliente3 = new Cliente(nombre3, apellido3, null, telefono3, direccion3, null);
 
-		// Productos
+		
+
+		// Relleno de stock a 30 unidades 
+
+		int[] stock = new int[30];
+
+		for (int i = 0; i < stock.length; i++) {
+
+			stock[i] = 1;
+
+		}
+			// Productos
 		System.out.print("Ingresa el producto 1: ");
 		String nproducto1 = sc.nextLine();
 
-		Producto producto1 = new Producto(nproducto1, 9.99, 1);
+		Producto producto1 = new Producto(nproducto1, 9.99, 30);
 
 		System.out.print("Ingresa el producto 2: ");
 		String nproducto2 = sc.nextLine();
 
-		Producto producto2 = new Producto(nproducto2, 12.99, 1);
+		Producto producto2 = new Producto(nproducto2, 12.99, 30);
 
 		System.out.print("Ingresa el producto 3: ");
 		String nproducto3 = sc.nextLine();
 
-		Producto producto3 = new Producto(nproducto3, 15.99, 1);
+		Producto producto3 = new Producto(nproducto3, 15.99, 30);
 
 		System.out.print("Ingresa el producto 4: ");
 		String nproducto4 = sc.nextLine();
 
-		Producto producto4 = new Producto(nproducto4, 1.99, 1);
+		Producto producto4 = new Producto(nproducto4, 1.99, 30);
 
 		System.out.print("Ingresa el producto 5: ");
 		String nproducto5 = sc.nextLine();
 
-		Producto producto5 = new Producto(nproducto5, 4.99, 1);
+		Producto producto5 = new Producto(nproducto5, 4.99, 30);
 
 		// MENU PEDIDOS
 
 		System.out.println("#####MENU PEDIDOS#####");
 		System.out.println("1.Realizar Pedidos");
-		// En realizar pedidos, primero nos pedirá el cliente con el teléfono y luego el
-		// producto o los productos si son mas de uno
+		
+		/* En realizar pedidos, primero nos pedirá el cliente con el teléfono y luego el
+		 producto o los productos si son mas de uno*/
+		
 		System.out.println("Introduce el telefono del cliente");
-
+		// Boolean para comprobar cliente
 		String telefono = sc.nextLine();
 		boolean esCliente1 = false;
 		boolean esCliente2 = false;
@@ -107,7 +120,7 @@ public class GestionPedidos {
 		} else {
 			System.out.println("No existe ese cliente");
 		}
-
+		// Submenu
 		if (esCliente1 || esCliente2 || esCliente3) {
 
 			System.out.println("###Seleccione el producto que desea:");
@@ -119,7 +132,7 @@ public class GestionPedidos {
 			System.out.println("5.Producto 5: " + producto5.getNombre() + " " + producto5.getPrecio() + "€");
 			int p;
 			Pedido pedido = new Pedido();
-			
+
 			do {
 				System.out.println("Dime el numero del producto o 0 para finalizar");
 				p = sc.nextInt();
@@ -138,27 +151,50 @@ public class GestionPedidos {
 						cliente3.realizarPedido(pedido);
 
 					}
+
+					// Metodo del ticket
 					totalefectivo = pedido.toString2();
 					System.out.println(pedido.toString());
 					break;
 				}
-
+				//Submenu productos, se le resta 30 al stock, si es menor de 5, sale un mensaje en pantalla.
 				case 1: {
-					System.out.println("¿Que cantidad quieres de " + producto1.getNombre() + "?");
-					int suma = sc.nextInt();
-					suma = producto1.setCantidad(suma);
+					System.out.println("¿Cuánta cantidad de " + producto1.getNombre() + " deseas?");
+					int cantidad = sc.nextInt();
+					int i;
+					producto1.realizarPedido(cantidad);
+
+					int stockRestante = 30 + producto1.getStock();
+
+					System.out.println("Stock restante de " + producto1.getNombre() + ": " + stockRestante);
+
+					if (stockRestante < 5) {
+					    System.out.println("Quedan menos de 5 unidades de " + producto1.getNombre());
+					}
+				
+				}
 
 					if (pedido.getProducto1() == null) {
 						pedido.agregarProducto1(producto1);
 					} else if (pedido.getProducto2() == null) {
 						pedido.agregarProducto2(producto1);
 					}
+
 					break;
-				}
+
 				case 2: {
-					System.out.println("¿Que cantidad quieres de " + producto2.getNombre() + "?");
-					int suma = sc.nextInt();
-					suma = producto2.setCantidad(suma);
+					System.out.println("¿Cuánta cantidad de " + producto2.getNombre() + " deseas?");
+					int cantidad = sc.nextInt();
+					int i;
+					producto2.realizarPedido(cantidad);
+
+					int stockRestante = 30 + producto2.getStock();
+
+					System.out.println("Stock restante de " + producto2.getNombre() + ": " + stockRestante);
+
+					if (stockRestante < 5) {
+					    System.out.println("Quedan menos de 5 unidades de " + producto2.getNombre());
+					}
 
 					if (pedido.getProducto1() == null) {
 						pedido.agregarProducto1(producto2);
@@ -168,9 +204,18 @@ public class GestionPedidos {
 					break;
 				}
 				case 3: {
-					System.out.println("¿Que cantidad quieres de " + producto3.getNombre() + "?");
-					int suma = sc.nextInt();
-					suma = producto3.setCantidad(suma);
+					System.out.println("¿Cuánta cantidad de " + producto3.getNombre() + " deseas?");
+					int cantidad = sc.nextInt();
+					int i;
+					producto1.realizarPedido(cantidad);
+
+					int stockRestante = 30 + producto3.getStock();
+
+					System.out.println("Stock restante de " + producto3.getNombre() + ": " + stockRestante);
+
+					if (stockRestante < 5) {
+					    System.out.println("Quedan menos de 5 unidades de " + producto3.getNombre());
+					}
 
 					if (pedido.getProducto1() == null) {
 						pedido.agregarProducto1(producto3);
@@ -180,9 +225,18 @@ public class GestionPedidos {
 					break;
 				}
 				case 4: {
-					System.out.println("¿Que cantidad quieres de " + producto4.getNombre() + "?");
-					int suma = sc.nextInt();
-					suma = producto4.setCantidad(suma);
+					System.out.println("¿Cuánta cantidad de " + producto4.getNombre() + " deseas?");
+					int cantidad = sc.nextInt();
+					int i;
+					producto1.realizarPedido(cantidad);
+
+					int stockRestante = 30 + producto4.getStock();
+
+					System.out.println("Stock restante de " + producto4.getNombre() + ": " + stockRestante);
+
+					if (stockRestante < 5) {
+					    System.out.println("Quedan menos de 5 unidades de " + producto4.getNombre());
+					}
 
 					if (pedido.getProducto1() == null) {
 						pedido.agregarProducto1(producto4);
@@ -192,9 +246,18 @@ public class GestionPedidos {
 					break;
 				}
 				case 5: {
-					System.out.println("¿Que cantidad quieres de " + producto5.getNombre() + "?");
-					int suma = sc.nextInt();
-					suma = producto5.setCantidad(suma);
+					System.out.println("¿Cuánta cantidad de " + producto5.getNombre() + " deseas?");
+					int cantidad = sc.nextInt();
+					int i;
+					producto1.realizarPedido(cantidad);
+
+					int stockRestante = 30 + producto5.getStock();
+
+					System.out.println("Stock restante de " + producto5.getNombre() + ": " + stockRestante);
+
+					if (stockRestante < 5) {
+					    System.out.println("Quedan menos de 5 unidades de " + producto5.getNombre());
+					}
 
 					if (pedido.getProducto1() == null) {
 						pedido.agregarProducto1(producto5);
@@ -208,10 +271,12 @@ public class GestionPedidos {
 					break;
 				}
 			} while (p != 0);
+
 		}
-		
 		PasarelaDePago efectivo = new PasarelaDePago();
-		
-				  efectivo.efectivopago(totalefectivo);
+
+		efectivo.efectivopago(totalefectivo);
+		sc.close();
+
 	}
 }

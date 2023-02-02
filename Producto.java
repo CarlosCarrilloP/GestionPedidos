@@ -1,10 +1,11 @@
 package carlosPedido;
 
 public class Producto {
-
+	// Atributos
 	String nombre;
 	double precio;
 	int cantidad;
+	private int stock;
 
 	// Constructor vacío
 
@@ -44,8 +45,13 @@ public class Producto {
 		return this.cantidad = cantidad;
 	}
 
-	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return true;
+	// Metodos para el stock
+
+	public int getStock() {
+		return this.stock;
+	}
+
+	public void realizarPedido(int cantidad) {
+		stock -= cantidad;
 	}
 }

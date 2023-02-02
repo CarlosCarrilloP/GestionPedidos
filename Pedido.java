@@ -139,12 +139,13 @@ public class Pedido {
 		producto = null;
 		return producto;
 	}
+	//Codigo pedido: es la fecha de hoy
 	public String generarCodigoPedido() {
 		return String.valueOf(new Date().getTime());
 
 	}
 
-	@Override
+	@Override //Ticket que se imprime por pantalla cuando se realiza el pedido
 	public String toString() {
 		double totalProducto1 = producto1.getCantidad() * producto1.getPrecio();
 		double totalProducto2 = producto2.getCantidad() * producto2.getPrecio();
@@ -156,7 +157,7 @@ public class Pedido {
 				+ producto2.getPrecio() + "           " + totalProducto2 + " € \n" + " TOTAL -------------------------------> " + totalPedido + " € \n ";
 
 		
-	}
+	} 
 	public double toString2() {
 		
 		double totalProducto1 = producto1.getCantidad() * producto1.getPrecio();
