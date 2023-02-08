@@ -5,7 +5,10 @@ public class Producto {
 	String nombre;
 	double precio;
 	int cantidad;
+	int cantidad1 = 0;
 	private int stock;
+	private int stock1[] = new int[30];
+	
 
 	// Constructor vacío
 
@@ -50,8 +53,30 @@ public class Producto {
 	public int getStock() {
 		return this.stock;
 	}
+	//Rellenar stock
+	public void rellenarStock() {
+
+		for (int i = 0; i < stock1.length; i++) {
+
+			stock1[i] = 1;
+		
+		}
+		
+	}
+	public int mostrarStock(){
+		//Inicializo la variable a 0 de nuevo porque si no, el valor de cantidad1 es erroneo
+		cantidad1 = 0; 
+		for (int i = 0; i < stock1.length; i++) {
+			
+			cantidad1++;
+			
+		}
+		
+		return cantidad1;
+	}	
+
 
 	public void realizarPedido(int cantidad) {
-		stock -= cantidad;
+		cantidad1 = cantidad1 - cantidad;
 	}
 }

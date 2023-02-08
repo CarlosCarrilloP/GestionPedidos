@@ -3,8 +3,7 @@ package carlosPedido;
 import java.util.Scanner;
 
 /**
- * @author Carlos Carrillo V 0.1
- * Añadida la funcionalidad de stockaje
+ * @author Carlos Carrillo V 0.1 Añadida la funcionalidad de stockaje
  *
  */
 public class GestionPedidos {
@@ -56,51 +55,44 @@ public class GestionPedidos {
 
 		Cliente cliente3 = new Cliente(nombre3, apellido3, null, telefono3, direccion3, null);
 
-		
+		// Relleno de stock a 30 unidades llamando al metodo
 
-		// Relleno de stock a 30 unidades 
-
-		int[] stock = new int[30];
-
-		for (int i = 0; i < stock.length; i++) {
-
-			stock[i] = 1;
-
-		}
-			// Productos
+		// Productos
 		System.out.print("Ingresa el producto 1: ");
 		String nproducto1 = sc.nextLine();
 
-		Producto producto1 = new Producto(nproducto1, 9.99, 30);
+		Producto producto1 = new Producto(nproducto1, 9.99, 1);
 
 		System.out.print("Ingresa el producto 2: ");
 		String nproducto2 = sc.nextLine();
 
-		Producto producto2 = new Producto(nproducto2, 12.99, 30);
+		Producto producto2 = new Producto(nproducto2, 12.99, 0);
 
 		System.out.print("Ingresa el producto 3: ");
 		String nproducto3 = sc.nextLine();
 
-		Producto producto3 = new Producto(nproducto3, 15.99, 30);
+		Producto producto3 = new Producto(nproducto3, 15.99, 1);
 
 		System.out.print("Ingresa el producto 4: ");
 		String nproducto4 = sc.nextLine();
 
-		Producto producto4 = new Producto(nproducto4, 1.99, 30);
+		Producto producto4 = new Producto(nproducto4, 1.99, 1);
 
 		System.out.print("Ingresa el producto 5: ");
 		String nproducto5 = sc.nextLine();
 
-		Producto producto5 = new Producto(nproducto5, 4.99, 30);
+		Producto producto5 = new Producto(nproducto5, 4.99, 1);
 
 		// MENU PEDIDOS
 
 		System.out.println("#####MENU PEDIDOS#####");
 		System.out.println("1.Realizar Pedidos");
-		
-		/* En realizar pedidos, primero nos pedirá el cliente con el teléfono y luego el
-		 producto o los productos si son mas de uno*/
-		
+
+		/*
+		 * En realizar pedidos, primero nos pedirá el cliente con el teléfono y luego el
+		 * producto o los productos si son mas de uno
+		 */
+
 		System.out.println("Introduce el telefono del cliente");
 		// Boolean para comprobar cliente
 		String telefono = sc.nextLine();
@@ -132,11 +124,17 @@ public class GestionPedidos {
 			System.out.println("5.Producto 5: " + producto5.getNombre() + " " + producto5.getPrecio() + "€");
 			int p;
 			Pedido pedido = new Pedido();
-
+			int stockRestante = 0;
 			do {
-				System.out.println("Dime el numero del producto o 0 para finalizar");
+				
+				if (stockRestante < 0) {
+					break;
+				}else {
+							
+					System.out.println("Dime el numero del producto o 0 para finalizar");
 				p = sc.nextInt();
 
+				
 				switch (p) {
 
 				case 0: {
@@ -157,21 +155,26 @@ public class GestionPedidos {
 					System.out.println(pedido.toString());
 					break;
 				}
-				//Submenu productos, se le resta 30 al stock, si es menor de 5, sale un mensaje en pantalla.
+				// Submenu productos, se le resta 30 al stock, si es menor de 5, sale un mensaje
+				// en pantalla.
 				case 1: {
 					System.out.println("¿Cuánta cantidad de " + producto1.getNombre() + " deseas?");
 					int cantidad = sc.nextInt();
 					int i;
 					producto1.realizarPedido(cantidad);
+					producto1.setCantidad(cantidad);
 
-					int stockRestante = 30 + producto1.getStock();
+					 stockRestante = producto2.mostrarStock() - cantidad;
 
-					System.out.println("Stock restante de " + producto1.getNombre() + ": " + stockRestante);
-
-					if (stockRestante < 5) {
-					    System.out.println("Quedan menos de 5 unidades de " + producto1.getNombre());
+					if (stockRestante > 5 && stockRestante <= 30) {
+						System.out.println("Stock restante de " + producto1.getNombre() + ": " + stockRestante);
+					} else if (stockRestante <= 5 && stockRestante >= 0) {
+						System.out.println("Quedan menos de 5 unidades de " + producto1.getNombre());
+					} else {
+						System.out.println("No hay suficiente Stock");
+						break;
 					}
-				
+
 				}
 
 					if (pedido.getProducto1() == null) {
@@ -187,13 +190,17 @@ public class GestionPedidos {
 					int cantidad = sc.nextInt();
 					int i;
 					producto2.realizarPedido(cantidad);
+					producto2.setCantidad(cantidad);
 
-					int stockRestante = 30 + producto2.getStock();
+					stockRestante = producto2.mostrarStock() - cantidad;
 
-					System.out.println("Stock restante de " + producto2.getNombre() + ": " + stockRestante);
-
-					if (stockRestante < 5) {
-					    System.out.println("Quedan menos de 5 unidades de " + producto2.getNombre());
+					if (stockRestante > 5 && stockRestante <= 30) {
+						System.out.println("Stock restante de " + producto1.getNombre() + ": " + stockRestante);
+					} else if (stockRestante <= 5 && stockRestante >= 0) {
+						System.out.println("Quedan menos de 5 unidades de " + producto1.getNombre());
+					} else {
+						System.out.println("No hay suficiente Stock");
+						break;
 					}
 
 					if (pedido.getProducto1() == null) {
@@ -207,14 +214,17 @@ public class GestionPedidos {
 					System.out.println("¿Cuánta cantidad de " + producto3.getNombre() + " deseas?");
 					int cantidad = sc.nextInt();
 					int i;
-					producto1.realizarPedido(cantidad);
+					producto3.realizarPedido(cantidad);
+					producto3.setCantidad(cantidad);
 
-					int stockRestante = 30 + producto3.getStock();
+					stockRestante = producto2.mostrarStock() - cantidad;
 
-					System.out.println("Stock restante de " + producto3.getNombre() + ": " + stockRestante);
-
-					if (stockRestante < 5) {
-					    System.out.println("Quedan menos de 5 unidades de " + producto3.getNombre());
+					if (stockRestante > 5 && stockRestante <= 30) {
+						System.out.println("Stock restante de " + producto1.getNombre() + ": " + stockRestante);
+					} else if (stockRestante <= 5 && stockRestante >= 0) {
+						System.out.println("Quedan menos de 5 unidades de " + producto1.getNombre());
+					} else {
+						System.out.println("No hay suficiente Stock");
 					}
 
 					if (pedido.getProducto1() == null) {
@@ -228,14 +238,17 @@ public class GestionPedidos {
 					System.out.println("¿Cuánta cantidad de " + producto4.getNombre() + " deseas?");
 					int cantidad = sc.nextInt();
 					int i;
-					producto1.realizarPedido(cantidad);
+					producto4.realizarPedido(cantidad);
+					producto4.setCantidad(cantidad);
 
-					int stockRestante = 30 + producto4.getStock();
+					stockRestante = producto2.mostrarStock() - cantidad;
 
-					System.out.println("Stock restante de " + producto4.getNombre() + ": " + stockRestante);
-
-					if (stockRestante < 5) {
-					    System.out.println("Quedan menos de 5 unidades de " + producto4.getNombre());
+					if (stockRestante > 5 && stockRestante <= 30) {
+						System.out.println("Stock restante de " + producto1.getNombre() + ": " + stockRestante);
+					} else if (stockRestante <= 5 && stockRestante >= 0) {
+						System.out.println("Quedan menos de 5 unidades de " + producto1.getNombre());
+					} else {
+						System.out.println("No hay suficiente Stock");
 					}
 
 					if (pedido.getProducto1() == null) {
@@ -249,14 +262,17 @@ public class GestionPedidos {
 					System.out.println("¿Cuánta cantidad de " + producto5.getNombre() + " deseas?");
 					int cantidad = sc.nextInt();
 					int i;
-					producto1.realizarPedido(cantidad);
+					producto5.realizarPedido(cantidad);
+					producto5.setCantidad(cantidad);
 
-					int stockRestante = 30 + producto5.getStock();
+					stockRestante = producto2.mostrarStock() - cantidad;
 
-					System.out.println("Stock restante de " + producto5.getNombre() + ": " + stockRestante);
-
-					if (stockRestante < 5) {
-					    System.out.println("Quedan menos de 5 unidades de " + producto5.getNombre());
+					if (stockRestante > 5 && stockRestante <= 30) {
+						System.out.println("Stock restante de " + producto1.getNombre() + ": " + stockRestante);
+					} else if (stockRestante <= 5 && stockRestante >= 0) {
+						System.out.println("Quedan menos de 5 unidades de " + producto1.getNombre());
+					} else {
+						System.out.println("No hay suficiente Stock");
 					}
 
 					if (pedido.getProducto1() == null) {
@@ -270,6 +286,7 @@ public class GestionPedidos {
 
 					break;
 				}
+			}
 			} while (p != 0);
 
 		}

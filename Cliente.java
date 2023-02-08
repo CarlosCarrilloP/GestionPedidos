@@ -82,13 +82,13 @@ public class Cliente {
 	// Constructor vacio
 
 	public Cliente() {
-		super();
+		
 	}
 
 	// Constructor
 	public Cliente(String nombre, String apellidos, Date fechaDeAlta, String telefono, String direccion,
 			String historial) {
-		super();
+		
 		this.nombre = nombre.toLowerCase();
 		this.apellidos = apellidos.toUpperCase();
 		this.fechaDeAlta = fechaDeAlta;
