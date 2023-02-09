@@ -4,17 +4,14 @@ import java.util.Date;
 
 public class Pedido {
 
-
 	// Atributos
-	 Cliente cliente;
-	 Producto producto1;
-	 Producto producto2;
-	 double importeTotal;
-	 PasarelaDePago pago;
-	 Estado estado;
+	Cliente cliente;
+	Producto producto1;
+	Producto producto2;
+	double importeTotal;
+	PasarelaDePago pago;
+	Estado estado;
 	String codigoPedido;
-
-	
 
 	// Constructor vacío
 	public Pedido() {
@@ -36,12 +33,13 @@ public class Pedido {
 	public Cliente getCliente() {
 		return cliente;
 	}
+
 	public String getCodigoPedido() {
 		return codigoPedido;
 	}
 
 	public void setCodigoPedido() {
-		
+
 		this.codigoPedido = generarCodigoPedido();
 	}
 
@@ -139,33 +137,49 @@ public class Pedido {
 		producto = null;
 		return producto;
 	}
-	//Codigo pedido: es la fecha de hoy
+
+	// Codigo pedido: es la fecha de hoy
 	public String generarCodigoPedido() {
 		return String.valueOf(new Date().getTime());
 
 	}
 
-	@Override //Ticket que se imprime por pantalla cuando se realiza el pedido
+	@Override // Ticket que se imprime por pantalla cuando se realiza el pedido
 	public String toString() {
-		double totalProducto1 = producto1.getCantidad() * producto1.getPrecio();
-		double totalProducto2 = producto2.getCantidad() * producto2.getPrecio();
+
+		double totalProducto1 = 0;
+		double totalProducto2 = 0;
+		String strProducto1 = "";
+		String strProducto2 = "";
+		if (producto1 != null) {
+			totalProducto1 = producto1.getCantidad() * producto1.getPrecio();
+			strProducto1 = producto1.getCantidad() + "                  " + producto1.getNombre() + "                "
+					+ producto1.getPrecio() + "                " + totalProducto1 + " â‚¬ \n";
+		}
+		if (producto2 != null) {
+			totalProducto2 = producto2.getCantidad() * producto2.getPrecio();
+			strProducto2 = producto2.getCantidad() + "              " + producto2.getNombre() + "                "
+					+ producto2.getPrecio() + "            " + totalProducto2 + " â‚¬ \n";
+		}
 		double totalPedido = totalProducto1 + totalProducto2;
 
-		return	" CANTIDAD   PRODUCTO      PRECIO UD.         TOTAL \n" +
-				producto1.getCantidad() + "               " + producto1.getNombre() + "             " + producto1.getPrecio() + "           "
-				+ totalProducto1 + " € \n" + producto2.getCantidad() + "               " + producto2.getNombre() + "             "
-				+ producto2.getPrecio() + "           " + totalProducto2 + " € \n" + " TOTAL -------------------------------> " + totalPedido + " € \n ";
+		return " CANTIDAD    PRODUCTO           PRECIO UD.            TOTAL \n" + strProducto1 + strProducto2 + " TOTAL -------------------------------> " + totalPedido + "  â‚¬ \n ";
+				}
 
-		
-	} 
 	public double toString2() {
+		double totalPedido = 0;
+		if (producto1 != null) {
+			
+			double totalProducto1 = producto1.getCantidad() * producto1.getPrecio();
+			totalPedido+=totalProducto1;
+		}
+		if (producto2 != null) {
+			double totalProducto2 = producto2.getCantidad() * producto2.getPrecio();
+			totalPedido += totalProducto2;
+		}
 		
-		double totalProducto1 = producto1.getCantidad() * producto1.getPrecio();
-		double totalProducto2 = producto2.getCantidad() * producto2.getPrecio();
-		double totalPedido = totalProducto1 + totalProducto2;
 		
 		return totalPedido;
-		
 	}
 
 }
